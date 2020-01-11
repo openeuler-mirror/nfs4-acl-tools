@@ -1,15 +1,12 @@
 Name:           nfs4-acl-tools
 Version:        0.3.4
-Release:        4
+Release:        5
 Summary:        The nfs4 ACL tools
 License:        BSD
 URL:            http://www.citi.umich.edu/projects/nfsv4/linux/
 Source0:        http://linux-nfs.org/~bfields/nfs4-acl-tools/%{name}-%{version}.tar.gz
 
 BuildRequires: libtool libattr-devel qt-devel git
-
-
-Patch0000: 0000-nfs4acl-0.2.0-compile.patch
 
 %description
 It contains commandline and GUI NFSv4 ACL tools, which deal directly with NFSv4 ACLs.
@@ -63,6 +60,12 @@ install -m 0755 GUI/nfs4-acl-editor/nfs4-acl-editor %{buildroot}/usr/bin/nfs4-ac
 
 
 %changelog
+* Sat Jan 11 2020 renxudong <renxudong1@huawei.com> - 0.3.4-5
+- Type:enhancemnet
+- ID:NA
+- SUG:NA
+- DESC:Be consistent with the native community
+
 * Wed Sep 11 2019 openEuler Buildteam <buildteam@openeuler.org> - 0.3.4-4
 - Type:enhancemnet
 - ID:NA
