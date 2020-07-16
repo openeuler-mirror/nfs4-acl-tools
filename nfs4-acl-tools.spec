@@ -1,23 +1,15 @@
 Name:           nfs4-acl-tools
-Version:        0.3.4
-Release:        5
+Version:        0.3.7
+Release:        1
 Summary:        The nfs4 ACL tools
 License:        BSD
 URL:            http://www.citi.umich.edu/projects/nfsv4/linux/
 Source0:        http://linux-nfs.org/~bfields/nfs4-acl-tools/%{name}-%{version}.tar.gz
 
-BuildRequires: libtool libattr-devel qt-devel git
+BuildRequires: libtool git libattr-devel
 
 %description
-It contains commandline and GUI NFSv4 ACL tools, which deal directly with NFSv4 ACLs.
-It also contains GUI ACL utilities for the Linux NFSv4 client.
-
-
-%package        gui
-Summary:  nfs4 ACL tools qt gui
-
-%description    gui
-It contains GUI for the nfs4-acl-tools.
+It contains commandline NFSv4 ACL tools, which deal directly with NFSv4 ACLs.
 
 %package        help
 Summary:        Including man files for nfs4-acl-tools
@@ -29,21 +21,15 @@ This contains man files for the using of nfs4-acl-tools.
 %prep
 %autosetup -n %{name}-%{version} -p1 -S git
 
-
 %build
 %configure
 CFLAGS="`echo $RPM_OPT_FLAGS -fpie`"
 export LDFLAGS="-pie"
 %make_build
 
-pushd GUI/nfs4-acl-editor
-%{qmake_qt4}  nfs4-acl-editor.pro
-%make_build
-popd
-
 %install
-%make_install
-install -m 0755 GUI/nfs4-acl-editor/nfs4-acl-editor %{buildroot}/usr/bin/nfs4-acl-editor
+rm -rf %{buildroot}
+make DESTDIR=%{buildroot} install
 
 %files
 %license COPYING
@@ -52,14 +38,13 @@ install -m 0755 GUI/nfs4-acl-editor/nfs4-acl-editor %{buildroot}/usr/bin/nfs4-ac
 %{_bindir}/nfs4_getfacl
 %{_bindir}/nfs4_setfacl
 
-%files gui
-%{_bindir}/nfs4-acl-editor
-
 %files help
 %{_mandir}/man*/*
 
-
 %changelog
+* Thu Jul 16 2020 wuguanghao <wuguanghao3@huawei.com> - 0.3.7-1
+- update nfs4-acl-tools version to 0.3.7-1
+
 * Sat Jan 11 2020 renxudong <renxudong1@huawei.com> - 0.3.4-5
 - Type:enhancemnet
 - ID:NA
