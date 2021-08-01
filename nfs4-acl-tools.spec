@@ -1,12 +1,12 @@
 Name:           nfs4-acl-tools
 Version:        0.3.7
-Release:        1
+Release:        2
 Summary:        The nfs4 ACL tools
 License:        BSD
 URL:            http://www.citi.umich.edu/projects/nfsv4/linux/
 Source0:        http://linux-nfs.org/~bfields/nfs4-acl-tools/%{name}-%{version}.tar.gz
 
-BuildRequires: libtool git libattr-devel
+BuildRequires: libtool libattr-devel
 
 %description
 It contains commandline NFSv4 ACL tools, which deal directly with NFSv4 ACLs.
@@ -19,7 +19,7 @@ Requires:       man
 This contains man files for the using of nfs4-acl-tools.
 
 %prep
-%autosetup -n %{name}-%{version} -p1 -S git
+%autosetup -n %{name}-%{version} -p1
 
 %build
 %configure
@@ -42,6 +42,9 @@ make DESTDIR=%{buildroot} install
 %{_mandir}/man*/*
 
 %changelog
+* Fri Jul 30 2021 chenyanpanHW <chenyanpan@huawei.com> - 0.3.7-2
+- DESC: delete -S git from %autosetup, and delete BuildRequires git
+
 * Thu Jul 16 2020 wuguanghao <wuguanghao3@huawei.com> - 0.3.7-1
 - update nfs4-acl-tools version to 0.3.7-1
 
