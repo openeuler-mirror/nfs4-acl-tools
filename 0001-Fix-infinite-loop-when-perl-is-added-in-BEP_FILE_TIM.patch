@@ -1,0 +1,53 @@
+From bee9daf0008cb7b7b7516090e60a8f52b7d214d7 Mon Sep 17 00:00:00 2001
+From: Wenchao Hao <haowenchao@huawei.com>
+Date: Wed, 1 Dec 2021 11:10:06 +0800
+Subject: [PATCH] Fix infinite loop when perl is added in BEP_FILE_TIME_LIST
+
+Makefile specify a rules like following:
+
+configure include/builddefs include/config.h: aclocal.m4
+	autoconf
+	./configure \
+	...
+Normally, this rule would run recipe for target configure first, and the
+include/builddefs and include/config.h would be generated in this target.
+
+While once perl is added in BEP_FILE_TIME_LIST, this rule run recipe for target
+include/builddefs first and cause a infinite loop.
+
+To fix this issue, splict previous recipe as following to explictly tell make
+run configure first
+
+include/builddefs: configure
+include/config.h: configure
+
+configure: aclocal.m4
+	autoconf \
+	./configure \
+	...
+
+Signed-off-by: Wenchao Hao <haowenchao@huawei.com>
+Signed-off-by: volcanodragon <linfeilong@huawei.com>
+---
+ Makefile | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index 5302e11..fa3d93b 100644
+--- a/Makefile
++++ b/Makefile
+@@ -59,7 +59,10 @@ else
+ clean:	# if configure hasn't run, nothing to clean
+ endif
+ 
+-$(CONFIGURE): aclocal.m4
++include/builddefs: configure
++include/config.h: configure
++
++configure: aclocal.m4
+ 	autoconf
+ 	./configure \
+ 		--prefix=/ \
+-- 
+1.8.3.1
+
