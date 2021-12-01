@@ -1,12 +1,14 @@
 Name:           nfs4-acl-tools
 Version:        0.3.7
-Release:        2
+Release:        3
 Summary:        The nfs4 ACL tools
 License:        BSD
 URL:            http://www.citi.umich.edu/projects/nfsv4/linux/
 Source0:        http://linux-nfs.org/~bfields/nfs4-acl-tools/%{name}-%{version}.tar.gz
 
 BuildRequires: libtool libattr-devel
+
+Patch1:        0001-Fix-infinite-loop-when-perl-is-added-in-BEP_FILE_TIM.patch
 
 %description
 It contains commandline NFSv4 ACL tools, which deal directly with NFSv4 ACLs.
@@ -42,6 +44,9 @@ make DESTDIR=%{buildroot} install
 %{_mandir}/man*/*
 
 %changelog
+* Wed Dec 1 2021 volcanodragon <linfeilong@huawei.com> - 0.3.7-3
+- DESC: Fix infinite loop when perl is added in BEP_FILE_TIME_LIST
+
 * Fri Jul 30 2021 chenyanpanHW <chenyanpan@huawei.com> - 0.3.7-2
 - DESC: delete -S git from %autosetup, and delete BuildRequires git
 
