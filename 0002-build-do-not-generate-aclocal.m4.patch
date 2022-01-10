@@ -1,0 +1,47 @@
+From c0819ccf8ddf3fffffe69c5f77387a30a9704e00 Mon Sep 17 00:00:00 2001
+From: Wenchao Hao <haowenchao@huawei.com>
+Date: Mon, 10 Jan 2022 20:56:24 +0800
+Subject: [PATCH] build: do not generate aclocal.m4
+
+Since autoconf updated, aclocal would report following error:
+
+aclocal --output=aclocal.m4
+Attempt to reload Scalar/Util.pm aborted.
+Compilation failed in require at /usr/share/perl5/vendor_perl/File/Temp.pm line 153.
+BEGIN failed--compilation aborted at /usr/share/perl5/vendor_perl/File/Temp.pm line 153.
+Compilation failed in require at /usr/share/autoconf/Autom4te/General.pm line 44.
+BEGIN failed--compilation aborted at /usr/share/autoconf/Autom4te/General.pm line 44.
+Compilation failed in require at /usr/bin/autom4te line 47.
+BEGIN failed--compilation aborted at /usr/bin/autom4te line 47.
+aclocal: error: autom4te failed with exit status: 255
+make: *** [Makefile:78: aclocal.m4] Error 255
+
+aclocal command is to generate aclocal.m4 from configure.ac, this file is would not
+change.
+
+And origin tar package contains aclocal.m4 file which generated from configure.ac.
+aclocal.m4 generated in Makefile is same with aclocal.m4 in tar package. Here do not
+generate in Makefile
+
+Signed-off-by: Wenchao Hao <haowenchao@huawei.com>
+
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index fa3d93b..6aaf672 100644
+--- a/Makefile
++++ b/Makefile
+@@ -62,7 +62,7 @@ endif
+ include/builddefs: configure
+ include/config.h: configure
+ 
+-configure: aclocal.m4
++configure:
+ 	autoconf
+ 	./configure \
+ 		--prefix=/ \
+-- 
+1.8.3.1
+
