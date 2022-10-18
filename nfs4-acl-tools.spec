@@ -1,8 +1,8 @@
 Name:           nfs4-acl-tools
 Version:        0.3.7
-Release:        4
+Release:        5
 Summary:        The nfs4 ACL tools
-License:        BSD
+License:        BSD or GPLv2+ or LGPLv2.1
 URL:            http://www.citi.umich.edu/projects/nfsv4/linux/
 Source0:        http://linux-nfs.org/~bfields/nfs4-acl-tools/%{name}-%{version}.tar.gz
 
@@ -45,6 +45,9 @@ make DESTDIR=%{buildroot} install
 %{_mandir}/man*/*
 
 %changelog
+* Tue Oct 18 2022 zhanchengbin <zhanchengbin1@huawei.com> - 0.3.7-5
+- license: fix license error.
+
 * Mon Jan 10 2022 Wenchao Hao <haowenchao@huawei.com> - 0.3.7-4
 - DESC: build: do not generate aclocal.m4 to fix compile error
 
