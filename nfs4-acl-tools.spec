@@ -1,6 +1,6 @@
 Name:           nfs4-acl-tools
 Version:        0.3.7
-Release:        5
+Release:        6
 Summary:        The nfs4 ACL tools
 License:        BSD or GPLv2+ or LGPLv2.1
 URL:            http://www.citi.umich.edu/projects/nfsv4/linux/
@@ -25,7 +25,11 @@ This contains man files for the using of nfs4-acl-tools.
 %autosetup -n %{name}-%{version} -p1
 
 %build
-%configure
+%if "%toolchain" == "clang"
+	%configure LIBTOOL="%{_bindir}/libtool --tag=CC"
+%else 
+	%configure
+%endif
 CFLAGS="`echo $RPM_OPT_FLAGS -fpie`"
 export LDFLAGS="-pie"
 %make_build
@@ -45,6 +49,9 @@ make DESTDIR=%{buildroot} install
 %{_mandir}/man*/*
 
 %changelog
+* Mon May 08 2023 yoo <sunyuechi@iscas.ac.cn> - 0.3.7-6
+- fix clang build error
+
 * Tue Oct 18 2022 zhanchengbin <zhanchengbin1@huawei.com> - 0.3.7-5
 - license: fix license error.
 
